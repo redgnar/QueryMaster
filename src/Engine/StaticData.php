@@ -22,11 +22,11 @@ class StaticData implements Engine
     {
         /** @var DataSource\StaticData $queryDataSource */
         $queryDataSource = $this->getDataSource($query->getDataSource());
-        $columns = $queryDataSource->getColumns();
-        $data = $queryDataSource->data();
 
-        return new QueryResult(function () use ($data) {
-            yield from $data;
+        return new QueryResult(function () use ($queryDataSource) {
+            $columns = $queryDataSource->getColumns();
+
+            yield from $queryDataSource->data();
         });
     }
 }

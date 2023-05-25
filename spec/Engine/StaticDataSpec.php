@@ -36,12 +36,13 @@ class StaticDataSpec extends ObjectBehavior
         $query->getDataSource()->willReturn('source');
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
-        $dataSource->getColumns()->shouldHaveBeenCalled();
-        $dataSource->data()->shouldHaveBeenCalled();
         $result->toArray()->shouldBe([
             ['col1' => 'a', 'col2' => 1],
             ['col1' => 'b', 'col2' => 2],
         ]);
+        // Only after $result->generate or toArray was called
+        $dataSource->getColumns()->shouldHaveBeenCalled();
+        $dataSource->data()->shouldHaveBeenCalled();
     }
 
     function it_will_fail_if_query_has_invalid_source(DataSource $dataSource, Query $query)
