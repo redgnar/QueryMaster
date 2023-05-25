@@ -26,7 +26,10 @@ class StaticDataSpec extends ObjectBehavior
         $result = $this->data();
         $result->shouldBeAnInstanceOf(\Generator::class);
         $result->shouldYield(new \ArrayIterator([['col1' => 'a', 'col2' => 1], ['col1' => 'b', 'col2' => 2]]));
+    }
 
+    function it_describes_columns_of_data()
+    {
         $columns = $this->getColumns();
         $columns->shouldBeArray();
         $columns->shouldHaveKey('col1');
