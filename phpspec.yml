@@ -1,0 +1,4 @@
+suites:
+  query_suite:
+    namespace: Redgnar\QueryMaster
+    psr4_prefix: Redgnar\QueryMaster

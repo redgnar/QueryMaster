@@ -1,0 +1,21 @@
+{
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Redgnar\\QueryMaster\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^7.3",
+        "phpstan/phpstan": "^1.10",
+        "friendsofphp/php-cs-fixer": "^3.14"
+    },
+    "scripts": {
+        "style": "php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --stop-on-violation --using-cache=no",
+        "style-fix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php",
+        "quality": "phpstan analyse -c phpstan.neon --memory-limit 1G",
+        "quality-ci": "phpstan analyse -c phpstan.neon --no-progress --memory-limit 1G"
+    }
+}

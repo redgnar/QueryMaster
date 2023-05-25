@@ -1,0 +1,9 @@
+# https://confluence.webchili.in/pages/viewpage.action?pageId=142606425
+
+parameters:
+    paths:
+        - src
+    excludePaths:
+        - spec
+    level: max
+
