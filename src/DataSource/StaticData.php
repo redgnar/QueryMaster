@@ -8,30 +8,39 @@ use Redgnar\QueryMaster\MetaData\UnknownType;
 
 class StaticData implements DataSource
 {
+    /**
+     * @param \Closure $dataProvider should return array or \Generator that includes array<string, mixed>
+     */
+    public function __construct(private readonly \Closure $dataProvider)
+    {
+    }
+
     public function getColumns(): array
     {
         return $this->discoverFromRows($this->data());
     }
 
-    /**
-     * @return array<int, array<string, mixed>>
-     */
-    public function data(): array
+    public function data(): \Generator
     {
-        return [];
+        $dataProvider = $this->dataProvider;
+
+        yield from $dataProvider();
     }
 
     /**
-     * @param array<int, array<string, mixed>> $rows
-     *
      * @return Column[]
      *
      * @throws UnknownType
      */
-    private function discoverFromRows(array $rows): array
+    private function discoverFromRows(\Generator $rows): array
     {
         $columns = [];
+        /** @var array<int, array<string, mixed>> $row */
         foreach ($rows as $row) {
+            /**
+             * @var string $columnName
+             * @var mixed  $columnValue
+             */
             foreach ($row as $columnName => $columnValue) {
                 if (array_key_exists($columnName, $columns) || null === $columnValue) {
                     continue;

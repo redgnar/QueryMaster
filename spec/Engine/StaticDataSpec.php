@@ -16,10 +16,10 @@ class StaticDataSpec extends ObjectBehavior
     {
         $this->beConstructedWith();
         $this->registerDataSource('source', $dataSource);
-        $dataSource->data()->willReturn([
-            ['col1' => 'a', 'col2' => 1],
-            ['col1' => 'b', 'col2' => 2],
-        ]);
+        $dataSource->data()->willReturn((function () {
+            yield ['col1' => 'a', 'col2' => 1];
+            yield ['col1' => 'b', 'col2' => 2];
+        })());
         $dataSource->getColumns()->willReturn([
             'col1' => new Column('col1', 'string'),
             'col2' => new Column('col2', 'integer'),
