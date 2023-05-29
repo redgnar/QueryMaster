@@ -61,7 +61,7 @@ class StaticDataSpec extends ObjectBehavior
     function it_allows_to_fetch_results_from_data_source_base_on_query_with_equal_column_filter(DataSource\StaticData $dataSource, Query $query)
     {
         $query->getDataSource()->willReturn('source');
-        $query->getFilterSet()->willReturn(new Query\QueryFilterSet(['col1' => new Query\QueryFilterColumnOperator(['bcd'], '=', 'col1')]));
+        $query->getFilterSet()->willReturn(new Query\QueryFilterSet([new Query\QueryFilterColumnOperator(['bcd'], '=', 'col1')]));
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
         $result->toArray()->shouldBe([
@@ -72,7 +72,7 @@ class StaticDataSpec extends ObjectBehavior
     function it_allows_to_fetch_results_from_data_source_base_on_query_with_lower_column_filter(DataSource\StaticData $dataSource, Query $query)
     {
         $query->getDataSource()->willReturn('source');
-        $query->getFilterSet()->willReturn(new Query\QueryFilterSet(['col1' => new Query\QueryFilterColumnOperator([2], '<', 'col2')]));
+        $query->getFilterSet()->willReturn(new Query\QueryFilterSet([new Query\QueryFilterColumnOperator([2], '<', 'col2')]));
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
         $result->toArray()->shouldBe([
@@ -83,7 +83,7 @@ class StaticDataSpec extends ObjectBehavior
     function it_allows_to_fetch_results_from_data_source_base_on_query_with_lower_equal_column_filter(DataSource\StaticData $dataSource, Query $query)
     {
         $query->getDataSource()->willReturn('source');
-        $query->getFilterSet()->willReturn(new Query\QueryFilterSet(['col1' => new Query\QueryFilterColumnOperator([2], '<=', 'col2')]));
+        $query->getFilterSet()->willReturn(new Query\QueryFilterSet([new Query\QueryFilterColumnOperator([2], '<=', 'col2')]));
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
         $result->toArray()->shouldBe([
@@ -95,7 +95,7 @@ class StaticDataSpec extends ObjectBehavior
     function it_allows_to_fetch_results_from_data_source_base_on_query_with_greater_column_filter(DataSource\StaticData $dataSource, Query $query)
     {
         $query->getDataSource()->willReturn('source');
-        $query->getFilterSet()->willReturn(new Query\QueryFilterSet(['col1' => new Query\QueryFilterColumnOperator([3], '>', 'col2')]));
+        $query->getFilterSet()->willReturn(new Query\QueryFilterSet([new Query\QueryFilterColumnOperator([3], '>', 'col2')]));
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
         $result->toArray()->shouldBe([
@@ -107,7 +107,7 @@ class StaticDataSpec extends ObjectBehavior
     function it_allows_to_fetch_results_from_data_source_base_on_query_with_greater_equal_column_filter(DataSource\StaticData $dataSource, Query $query)
     {
         $query->getDataSource()->willReturn('source');
-        $query->getFilterSet()->willReturn(new Query\QueryFilterSet(['col1' => new Query\QueryFilterColumnOperator([3], '>=', 'col2')]));
+        $query->getFilterSet()->willReturn(new Query\QueryFilterSet([new Query\QueryFilterColumnOperator([3], '>=', 'col2')]));
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
         $result->toArray()->shouldBe([
@@ -120,7 +120,7 @@ class StaticDataSpec extends ObjectBehavior
     function it_allows_to_fetch_results_from_data_source_base_on_query_with_like_all_column_filter(DataSource\StaticData $dataSource, Query $query)
     {
         $query->getDataSource()->willReturn('source');
-        $query->getFilterSet()->willReturn(new Query\QueryFilterSet(['col1' => new Query\QueryFilterColumnOperator(['b'], '~', 'col1')]));
+        $query->getFilterSet()->willReturn(new Query\QueryFilterSet([new Query\QueryFilterColumnOperator(['b'], '~', 'col1')]));
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
         $result->toArray()->shouldBe([

@@ -6,6 +6,9 @@ namespace Redgnar\QueryMaster\Query;
 
 abstract class QueryFilterBasic implements QueryFilter
 {
+    /**
+     * @param array<int, mixed> $values
+     */
     public function __construct(private readonly array $values)
     {
     }

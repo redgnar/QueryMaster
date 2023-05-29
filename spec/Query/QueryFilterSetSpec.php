@@ -10,7 +10,7 @@ class QueryFilterSetSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedWith(['filter1' => new QueryFilterOperator(['test_value1'], '=')]);
+        $this->beConstructedWith([new QueryFilterOperator(['test_value1'], '=')]);
     }
 
     function it_is_initializable()
@@ -23,8 +23,8 @@ class QueryFilterSetSpec extends ObjectBehavior
         $result = $this->getFilters();
 
         $result->shouldBeArray();
-        $result->shouldHaveKey('filter1');
-        $filter1Value = $result['filter1'];
+        $result->shouldHaveKey(0);
+        $filter1Value = $result[0];
         $filter1Value->shouldBeAnInstanceOf(QueryFilterOperator::class);
     }
 }

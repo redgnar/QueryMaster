@@ -6,6 +6,9 @@ namespace Redgnar\QueryMaster\Query;
 
 class QueryFilterSet
 {
+    /**
+     * @param QueryFilter[] $filters
+     */
     public function __construct(private readonly array $filters)
     {
     }

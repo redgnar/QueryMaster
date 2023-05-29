@@ -14,8 +14,7 @@ class Query
         private readonly string $dataSource,
         private readonly QueryFilterSet $filterSet,
         private readonly QuerySortSet $sortSet,
-    )
-    {
+    ) {
     }
 
     public function getId(): string

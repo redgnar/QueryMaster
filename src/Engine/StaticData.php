@@ -29,6 +29,7 @@ class StaticData implements Engine
 
         return new QueryResult(function () use ($queryDataSource, $query) {
             $filterSet = $query->getFilterSet();
+            /** @var array<string, mixed> $row */
             foreach ($queryDataSource->data() as $row) {
                 if (!$this->matchToFilterSet($filterSet, $row)) {
                     continue;
@@ -38,6 +39,9 @@ class StaticData implements Engine
         });
     }
 
+    /**
+     * @param array<string, mixed> $row
+     */
     private function matchToFilterSet(QueryFilterSet $filterSet, array $row): bool
     {
         foreach ($filterSet->getFilters() as $filter) {
@@ -49,6 +53,9 @@ class StaticData implements Engine
         return true;
     }
 
+    /**
+     * @param array<string, mixed> $row
+     */
     private function matchToFilter(QueryFilter $filter, $row): bool
     {
         if ($filter instanceof Query\QueryFilterColumnOperator) {

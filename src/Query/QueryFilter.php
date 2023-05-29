@@ -6,5 +6,8 @@ namespace Redgnar\QueryMaster\Query;
 
 interface QueryFilter
 {
+    /**
+     * @return array<int, mixed>
+     */
     public function getValues(): array;
 }
