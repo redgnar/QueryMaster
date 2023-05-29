@@ -9,7 +9,12 @@ use Redgnar\QueryMaster\Query\QuerySortSet;
 
 class Query
 {
-    public function __construct(private readonly string $id, private readonly string $dataSource)
+    public function __construct(
+        private readonly string $id,
+        private readonly string $dataSource,
+        private readonly QueryFilterSet $filterSet,
+        private readonly QuerySortSet $sortSet,
+    )
     {
     }
 
@@ -23,13 +28,13 @@ class Query
         return $this->dataSource;
     }
 
-    public function getFilters(): QueryFilterSet
+    public function getFilterSet(): QueryFilterSet
     {
-        return new QueryFilterSet();
+        return $this->filterSet;
     }
 
-    public function getSorters(): QuerySortSet
+    public function getSortSet(): QuerySortSet
     {
-        return new QuerySortSet();
+        return $this->sortSet;
     }
 }

@@ -11,9 +11,9 @@ use Redgnar\QueryMaster\Query\QuerySortSet;
 
 class QuerySpec extends ObjectBehavior
 {
-    public function let()
+    public function let(QueryFilterSet $filterSet, QuerySortSet $sortSet)
     {
-        $this->beConstructedWith('uniqueId', 'dataSource');
+        $this->beConstructedWith('uniqueId', 'dataSource', $filterSet, $sortSet);
     }
 
     public function it_is_initializable()
@@ -33,11 +33,11 @@ class QuerySpec extends ObjectBehavior
 
     public function it_allows_to_get_filters()
     {
-        $this->getFilters()->shouldBeAnInstanceOf(QueryFilterSet::class);
+        $this->getFilterSet()->shouldBeAnInstanceOf(QueryFilterSet::class);
     }
 
     public function it_allows_to_get_sorters()
     {
-        $this->getSorters()->shouldBeAnInstanceOf(QuerySortSet::class);
+        $this->getSortSet()->shouldBeAnInstanceOf(QuerySortSet::class);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Redgnar\QueryMaster\Query;
 
-class QuerySortSet
+interface QueryFilter
 {
+    public function getValues(): array;
 }

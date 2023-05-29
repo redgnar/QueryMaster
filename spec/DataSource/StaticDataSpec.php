@@ -21,14 +21,14 @@ class StaticDataSpec extends ObjectBehavior
         $this->shouldHaveType(DataSource::class);
     }
 
-    function it_shows_data_as_generator()
+    function it_allows_to_shows_data_as_generator()
     {
         $result = $this->data();
         $result->shouldBeAnInstanceOf(\Generator::class);
         $result->shouldYield(new \ArrayIterator([['col1' => 'a', 'col2' => 1], ['col1' => 'b', 'col2' => 2]]));
     }
 
-    function it_describes_columns_of_data()
+    function it_allows_to_describes_columns_of_data()
     {
         $columns = $this->getColumns();
         $columns->shouldBeArray();
