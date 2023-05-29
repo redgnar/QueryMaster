@@ -9,7 +9,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "tests\\Redgnar\\QueryMaster\\": "tests/"
+            "Tests\\Redgnar\\QueryMaster\\": "tests/"
         }
     },
     "require-dev": {

@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace tests\Redgnar\QueryMaster;
+namespace Tests\Redgnar\QueryMaster;
 
+use PHPUnit\Framework\TestCase;
 use Redgnar\QueryMaster\Engine\StaticData;
 use Redgnar\QueryMaster\Query;
 
-class StaticEngineTest extends \PHPUnit\Framework\TestCase
+class StaticEngineTest extends TestCase
 {
-    private readonly StaticData $staticDataEngine;
+    private StaticData $staticDataEngine;
 
     protected function setUp(): void
     {
