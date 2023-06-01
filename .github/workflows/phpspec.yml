@@ -21,7 +21,6 @@ jobs:
                 stability: ["stable"]
                 include:
                     -   php: "8.2"
-                        stability: "dev"
 
         env:
             COMPOSER_ROOT_VERSION: dev-master
