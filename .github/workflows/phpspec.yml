@@ -1,0 +1,7 @@
+name: phpspec (php-actions)
+  # You may pin to the exact commit or the version.
+  # uses: php-actions/phpspec@0f7c59736d7c4dd8f724a19d413cbc5a2ffbbea4
+  uses: php-actions/phpspec@v0.1.0
+  with:
+    # Configuration file location
+    config: # optional, default is test/phpspec/phpspec.yml
