@@ -62,7 +62,7 @@ jobs:
                 run: ./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G
 
             -   name: Run tests (phpspec)
-                run: bin/phpspec run --format=dot
+                run: ./vendor/bin/phpspec run --format=dot
 
             -   name: Run tests (phpunit)
                 run: ./vendor/bin/phpunit -v
