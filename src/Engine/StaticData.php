@@ -130,12 +130,8 @@ class StaticData implements Engine
                 usort($sortedRows, function (array $row1, array $row2) use ($direction, $columnName) {
                     $a = $row1[$columnName] ?? null;
                     $b = $row2[$columnName] ?? null;
-                    $directionValue = Query\QuerySortDirection::ASC === $direction ? 1 : -1;
-                    if ($a === $b) {
-                        return 0;
-                    }
 
-                    return ($a < $b) ? -$directionValue : $directionValue;
+                    return Query\QuerySortDirection::ASC === $direction ? $a <=> $b : $b <=> $a;
                 });
             }
         }
