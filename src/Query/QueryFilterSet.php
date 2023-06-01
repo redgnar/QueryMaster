@@ -20,4 +20,9 @@ class QueryFilterSet
     {
         return $this->filters;
     }
+
+    public function hasFilter(): bool
+    {
+        return !empty($this->filters);
+    }
 }

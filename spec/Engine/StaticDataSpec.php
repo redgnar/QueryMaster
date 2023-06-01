@@ -38,6 +38,7 @@ class StaticDataSpec extends ObjectBehavior
     {
         $query->getDataSource()->willReturn('source');
         $query->getFilterSet()->willReturn(new Query\QueryFilterSet([]));
+        $query->getSortSet()->willReturn(new Query\QuerySortSet([]));
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
         $result->toArray()->shouldBe([
@@ -62,6 +63,7 @@ class StaticDataSpec extends ObjectBehavior
     {
         $query->getDataSource()->willReturn('source');
         $query->getFilterSet()->willReturn(new Query\QueryFilterSet([new Query\QueryFilterColumnOperator(['bcd'], '=', 'col1')]));
+        $query->getSortSet()->willReturn(new Query\QuerySortSet([]));
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
         $result->toArray()->shouldBe([
@@ -73,6 +75,7 @@ class StaticDataSpec extends ObjectBehavior
     {
         $query->getDataSource()->willReturn('source');
         $query->getFilterSet()->willReturn(new Query\QueryFilterSet([new Query\QueryFilterColumnOperator([2], '<', 'col2')]));
+        $query->getSortSet()->willReturn(new Query\QuerySortSet([]));
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
         $result->toArray()->shouldBe([
@@ -84,6 +87,7 @@ class StaticDataSpec extends ObjectBehavior
     {
         $query->getDataSource()->willReturn('source');
         $query->getFilterSet()->willReturn(new Query\QueryFilterSet([new Query\QueryFilterColumnOperator([2], '<=', 'col2')]));
+        $query->getSortSet()->willReturn(new Query\QuerySortSet([]));
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
         $result->toArray()->shouldBe([
@@ -96,6 +100,7 @@ class StaticDataSpec extends ObjectBehavior
     {
         $query->getDataSource()->willReturn('source');
         $query->getFilterSet()->willReturn(new Query\QueryFilterSet([new Query\QueryFilterColumnOperator([3], '>', 'col2')]));
+        $query->getSortSet()->willReturn(new Query\QuerySortSet([]));
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
         $result->toArray()->shouldBe([
@@ -108,6 +113,7 @@ class StaticDataSpec extends ObjectBehavior
     {
         $query->getDataSource()->willReturn('source');
         $query->getFilterSet()->willReturn(new Query\QueryFilterSet([new Query\QueryFilterColumnOperator([3], '>=', 'col2')]));
+        $query->getSortSet()->willReturn(new Query\QuerySortSet([]));
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
         $result->toArray()->shouldBe([
@@ -121,11 +127,28 @@ class StaticDataSpec extends ObjectBehavior
     {
         $query->getDataSource()->willReturn('source');
         $query->getFilterSet()->willReturn(new Query\QueryFilterSet([new Query\QueryFilterColumnOperator(['b'], '~', 'col1')]));
+        $query->getSortSet()->willReturn(new Query\QuerySortSet([]));
         $result = $this->execute($query);
         $result->shouldBeAnInstanceOf(QueryResult::class);
         $result->toArray()->shouldBe([
             ['col1' => 'abc', 'col2' => 1],
             ['col1' => 'bcd', 'col2' => 2],
+        ]);
+    }
+
+    function it_allows_to_fetch_results_from_data_source_base_on_query_with_column_sort(DataSource\StaticData $dataSource, Query $query)
+    {
+        $query->getDataSource()->willReturn('source');
+        $query->getFilterSet()->willReturn(new Query\QueryFilterSet([]));
+        $query->getSortSet()->willReturn(new Query\QuerySortSet([new Query\QuerySortColumn(Query\QuerySortDirection::DESC, 'col1')]));
+        $result = $this->execute($query);
+        $result->shouldBeAnInstanceOf(QueryResult::class);
+        $result->toArray()->shouldBe([
+            ['col1' => 'efg', 'col2' => 5],
+            ['col1' => 'def', 'col2' => 4],
+            ['col1' => 'cde', 'col2' => 3],
+            ['col1' => 'bcd', 'col2' => 2],
+            ['col1' => 'abc', 'col2' => 1],
         ]);
     }
 }

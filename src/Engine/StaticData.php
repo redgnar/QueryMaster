@@ -29,12 +29,26 @@ class StaticData implements Engine
 
         return new QueryResult(function () use ($queryDataSource, $query) {
             $filterSet = $query->getFilterSet();
-            /** @var array<string, mixed> $row */
-            foreach ($queryDataSource->data() as $row) {
-                if (!$this->matchToFilterSet($filterSet, $row)) {
-                    continue;
+            $sortSet = $query->getSortSet();
+            if (!$sortSet->hasSort()) {
+                /** @var array<string, mixed> $row */
+                foreach ($queryDataSource->data() as $row) {
+                    if (!$this->matchToFilterSet($filterSet, $row)) {
+                        continue;
+                    }
+                    yield $row;
                 }
-                yield $row;
+            } else {
+                $filteredRows = [];
+                /** @var array<string, mixed> $row */
+                foreach ($queryDataSource->data() as $row) {
+                    if (!$this->matchToFilterSet($filterSet, $row)) {
+                        continue;
+                    }
+                    $filteredRows[] = $row;
+                }
+
+                yield from $this->sortBySortSet($sortSet, $filteredRows);
             }
         });
     }
@@ -98,5 +112,34 @@ class StaticData implements Engine
         }
 
         return true;
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $filteredRows
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function sortBySortSet(Query\QuerySortSet $sortSet, array $filteredRows): array
+    {
+        $sortedRows = $filteredRows;
+        /** @var Query\QuerySort $sort */
+        foreach ($sortSet->getSorters() as $sort) {
+            if ($sort instanceof Query\QuerySortColumn) {
+                $columnName = $sort->getColumnName();
+                $direction = $sort->getDirection();
+                usort($sortedRows, function (array $row1, array $row2) use ($direction, $columnName) {
+                    $a = $row1[$columnName] ?? null;
+                    $b = $row2[$columnName] ?? null;
+                    $directionValue = Query\QuerySortDirection::ASC === $direction ? 1 : -1;
+                    if ($a === $b) {
+                        return 0;
+                    }
+
+                    return ($a < $b) ? -$directionValue : $directionValue;
+                });
+            }
+        }
+
+        return $sortedRows;
     }
 }

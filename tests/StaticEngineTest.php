@@ -28,12 +28,70 @@ class StaticEngineTest extends TestCase
 
     public function testFetchAll(): void
     {
-        $query = new Query('queryId', 'testSource1', new Query\QueryFilterSet([]), new Query\QuerySortSet());
+        $query = new Query('queryId', 'testSource1', new Query\QueryFilterSet([]), new Query\QuerySortSet([]));
         $result = $this->staticDataEngine->execute($query);
         $resultAsArray = $result->toArray();
         self::assertIsArray($resultAsArray);
         self::assertNotEmpty($resultAsArray);
-        self::assertGreaterThan(4, count($resultAsArray));
+        self::assertEquals([
+            ['col1' => 'abc', 'col2' => 1],
+            ['col1' => 'bcd', 'col2' => 2],
+            ['col1' => 'cde', 'col2' => 3],
+            ['col1' => 'def', 'col2' => 4],
+            ['col1' => 'efg', 'col2' => 5],
+        ], $resultAsArray);
     }
 
+    public function testFetchFiltered(): void
+    {
+        $query = new Query('queryId', 'testSource1',
+            new Query\QueryFilterSet([new Query\QueryFilterColumnOperator([3], '>=', 'col2')]),
+            new Query\QuerySortSet([])
+        );
+        $result = $this->staticDataEngine->execute($query);
+        $resultAsArray = $result->toArray();
+        self::assertIsArray($resultAsArray);
+        self::assertNotEmpty($resultAsArray);
+        self::assertEquals([
+            ['col1' => 'cde', 'col2' => 3],
+            ['col1' => 'def', 'col2' => 4],
+            ['col1' => 'efg', 'col2' => 5],
+        ], $resultAsArray);
+    }
+
+    public function testFetchSorted(): void
+    {
+        $query = new Query('queryId', 'testSource1',
+            new Query\QueryFilterSet([]),
+            new Query\QuerySortSet([new Query\QuerySortColumn(Query\QuerySortDirection::DESC, 'col1')])
+        );
+        $result = $this->staticDataEngine->execute($query);
+        $resultAsArray = $result->toArray();
+        self::assertIsArray($resultAsArray);
+        self::assertNotEmpty($resultAsArray);
+        self::assertEquals([
+            ['col1' => 'efg', 'col2' => 5],
+            ['col1' => 'def', 'col2' => 4],
+            ['col1' => 'cde', 'col2' => 3],
+            ['col1' => 'bcd', 'col2' => 2],
+            ['col1' => 'abc', 'col2' => 1],
+        ], $resultAsArray);
+    }
+
+    public function testFetchFilteredSorted(): void
+    {
+        $query = new Query('queryId', 'testSource1',
+            new Query\QueryFilterSet([new Query\QueryFilterColumnOperator([3], '>=', 'col2')]),
+            new Query\QuerySortSet([new Query\QuerySortColumn(Query\QuerySortDirection::DESC, 'col1')])
+        );
+        $result = $this->staticDataEngine->execute($query);
+        $resultAsArray = $result->toArray();
+        self::assertIsArray($resultAsArray);
+        self::assertNotEmpty($resultAsArray);
+        self::assertEquals([
+            ['col1' => 'efg', 'col2' => 5],
+            ['col1' => 'def', 'col2' => 4],
+            ['col1' => 'cde', 'col2' => 3],
+        ], $resultAsArray);
+    }
 }
